@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & Automation Engineer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ef4444; /* Red 500 */
+            --primary-glow: rgba(239, 68, 68, 0.5);
+            --bg-dark: #000000; /* Pure Black */
+            --bg-card: #0a0a0a; /* Even Darker Gray */
+            --border-color: #222222; /* Darker Gray */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: #e2e8f0; /* Slate 200 */
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #f87171, var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-image {
+            mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+            filter: drop-shadow(0 0 15px var(--primary-glow));
+        }
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 2.5rem;
+            background-color: var(--primary-color);
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+        .nav-link { position: relative; transition: color 0.3s ease; }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 50%; transform: translateX(-50%); background-color: var(--primary-color); transition: width 0.3s ease; }
+        .nav-link:hover::after { width: 100%; }
+        .section-title { border-bottom: 3px solid var(--primary-color); padding-bottom: 8px; display: inline-block; }
+        .card { background-color: var(--bg-card); border: 1px solid var(--border-color); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 0 30px var(--primary-glow); }
+        
+        /* Timeline Styles */
+        .timeline-item { position: relative; padding-left: 3rem; }
+        .timeline-item:not(:last-child) { padding-bottom: 2rem; }
+        .timeline-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background-color: var(--border-color); }
+        .timeline-icon { position: absolute; left: -0.7rem; top: 0; width: 1.5rem; height: 1.5rem; background-color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        
+        /* Chatbot styles */
+        #chatbot-container { position: fixed; bottom: 2rem; right: 2rem; z-index: 100; }
+        #chatbot-toggle { background-color: var(--primary-color); color: var(--bg-dark); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 20px var(--primary-glow); transition: transform 0.3s ease; overflow: hidden; }
+        #chatbot-toggle:hover { transform: scale(1.1); }
+        #chatbot-window { position: absolute; bottom: 80px; right: 0; width: 350px; height: 450px; background-color: var(--bg-card); border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden; transform: scale(0.95) translateY(10px); opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease; pointer-events: none; }
+        #chatbot-window.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: auto; }
+        .chat-header { background-color: #333; padding: 1rem; color: white; font-weight: bold; }
+        .chat-body { flex-grow: 1; padding: 1rem; overflow-y: auto; }
+        .chat-message { margin-bottom: 1rem; }
+        .chat-message.bot .message-bubble { background-color: #333; color: #e2e8f0; border-radius: 15px 15px 15px 0; padding: 0.75rem; max-width: 80%; display: inline-block; }
+        .chat-footer { padding: 1rem; border-top: 1px solid var(--border-color); }
+        .chat-input { width: 100%; background-color: #333; border: 1px solid #444; border-radius: 10px; padding: 0.5rem 1rem; color: white; }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Navigation -->
+    <nav class="fixed top-4 left-1/2 -translate-x-1/2 z-40 bg-black/50 backdrop-blur-sm p-3 rounded-full shadow-lg border border-gray-800" data-aos="fade-down">
+        <div class="flex items-center space-x-2 md:space-x-4 px-4">
+            <a href="#home" class="nav-link font-medium text-slate-300 hover:text-white text-xs md:text-base">Home</a>
+            <a href="#about" class="nav-link font-medium text-slate-300 hover:text-white text-xs md:text-base">About</a>
+            <a href="#experience" class="nav-link font-medium text-slate-300 hover:text-white text-xs md:text-base">Experience</a>
+            <a href="#skills" class="nav-link font-medium text-slate-300 hover:text-white text-xs md:text-base">Skills</a>
+            <a href="#projects" class="nav-link font-medium text-slate-300 hover:text-white text-xs md:text-base">Projects</a>
+            <a href="#chess" class="nav-link font-medium text-slate-300 hover:text-white text-xs md:text-base">Chess</a>
+            <a href="#education" class="nav-link font-medium text-slate-300 hover:text-white text-xs md:text-base">Education</a>
+            <a href="#contact" class="nav-link font-medium text-slate-300 hover:text-white text-xs md:text-base">Contact</a>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="flex justify-center lg:order-first" data-aos="fade-in" data-aos-delay="100" data-aos-duration="1000">
+                    <img src="D:\my-portfolio\images\hariharan.jpg" onerror="this.onerror=null;this.src='https://placehold.co/500x600/000000/ffffff?text=:)';" alt="Hariharan M" class="hero-image w-full max-w-sm lg:max-w-md">
+                </div>
+                <div class="text-center lg:text-left" data-aos="fade-right" data-aos-delay="500">
+                    <h2 class="text-2xl md:text-3xl font-medium text-slate-300 mb-2">Hello, I'm</h2>
+                    <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-4">Hariharan M</h1>
+                    <h3 class="text-2xl md:text-4xl font-semibold gradient-text h-12"><span id="typing-text"></span><span class="typing-cursor"></span></h3>
+                    <p class="max-w-xl text-slate-400 mt-6 text-lg leading-relaxed mx-auto lg:mx-0">Driven by a passion for Artificial Intelligence, I've developed expertise in Data Analysis, Machine Learning, and Deep Learning, with a growing interest in cloud-integrated AI solutions.</p>
+                    <div class="mt-8 flex gap-4 justify-center lg:justify-start">
+                        <a href="#projects" class="bg-red-600 text-white font-bold py-3 px-8 rounded-full hover:bg-red-500 transition-all transform hover:scale-105">View My Work</a>
+                        <a href="#contact" class="border-2 border-slate-600 text-slate-300 font-bold py-3 px-8 rounded-full hover:bg-slate-800 hover:border-slate-800 transition-all">Contact Me</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-28 scroll-mt-20">
+            <h2 class="text-4xl font-bold text-center mb-12 section-title" data-aos="fade-up">About Me</h2>
+            <div class="card p-8 md:p-12 rounded-2xl" data-aos="fade-up" data-aos-delay="100">
+                <p class="text-xl text-slate-300 leading-relaxed text-center max-w-3xl mx-auto">I'm a dedicated Automation & AI Engineer with a passion for creating elegant, efficient, and intelligent software solutions. My expertise lies in developing robust automation scripts, implementing machine learning models, and designing systems that learn and adapt. Beyond technology, I have a deep passion for the strategic challenges of chess. I'm driven by curiosity and a desire to solve complex challenges, both on the board and in code.</p>
+            </div>
+        </section>
+        
+        <!-- Experience Section -->
+        <section id="experience" class="py-28 scroll-mt-20">
+            <h2 class="text-4xl font-bold text-center mb-12 section-title" data-aos="fade-up">My Journey</h2>
+            <div class="max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                <div class="timeline-item">
+                    <div class="timeline-icon"></div>
+                    <h3 class="text-xl font-bold text-white">AI ML Engineer Intern</h3>
+                    <p class="font-semibold text-red-400">Bengaluru, IN | Nov 2024 - Jun 2025</p>
+                    <ul class="mt-2 text-slate-400 list-disc list-inside space-y-2">
+                        <li>Gathered and processed large-scale structured and unstructured datasets using Python, NumPy, and Pandas.</li>
+                        <li>Applied data wrangling, cleaning, and feature engineering techniques to enhance model accuracy.</li>
+                        <li>Conducted statistical analysis, EDA, and used Matplotlib, Seaborn, and Plotly for data visualization.</li>
+                        <li>Contributed to model optimization and scalability using Scikit-learn, XGBoost, and LightGBM.</li>
+                        <li>Applied hyperparameter tuning with Grid Search and Random Search to improve model accuracy.</li>
+                        <li>Interpreted model results and evaluated performance metrics (Accuracy, Precision, Recall, F1-score, ROC-AUC).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-28 scroll-mt-20">
+            <h2 class="text-4xl font-bold text-center mb-12 section-title" data-aos="fade-up">Technical Skills</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                <div class="card p-6 rounded-lg text-center" data-aos="fade-up" data-aos-delay="100"><p class="font-bold text-lg text-white">Python</p></div>
+                <div class="card p-6 rounded-lg text-center" data-aos="fade-up" data-aos-delay="150"><p class="font-bold text-lg text-white">Machine Learning</p></div>
+                <div class="card p-6 rounded-lg text-center" data-aos="fade-up" data-aos-delay="200"><p class="font-bold text-lg text-white">Deep Learning</p></div>
+                <div class="card p-6 rounded-lg text-center" data-aos="fade-up" data-aos-delay="250"><p class="font-bold text-lg text-white">Data Analysis</p></div>
+                <div class="card p-6 rounded-lg text-center" data-aos="fade-up" data-aos-delay="300"><p class="font-bold text-lg text-white">Data Visualization</p></div>
+                <div class="card p-6 rounded-lg text-center" data-aos="fade-up" data-aos-delay="350"><p class="font-bold text-lg text-white">NLP</p></div>
+                <div class="card p-6 rounded-lg text-center" data-aos="fade-up" data-aos-delay="400"><p class="font-bold text-lg text-white">RPA</p></div>
+                <div class="card p-6 rounded-lg text-center" data-aos="fade-up" data-aos-delay="450"><p class="font-bold text-lg text-white">SQL</p></div>
+                <div class="card p-6 rounded-lg text-center" data-aos="fade-up" data-aos-delay="500"><p class="font-bold text-lg text-white">n8n</p></div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-28 scroll-mt-20">
+            <h2 class="text-4xl font-bold text-center mb-12 section-title" data-aos="fade-up">Featured Projects</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://placehold.co/600x400/0a0a0a/ef4444?text=Finance+AI" class="w-full h-56 object-cover">
+                    <div class="p-6"><h3 class="text-2xl font-bold text-white mb-2">AI-Powered Finance Manager</h3><p class="text-slate-400 mb-4">Leverages Generative AI for intelligent financial insights, expense tracking, and personalized budget recommendations. Built with Clerk, Arcjet, ShadCN, and Supabase.</p></div>
+                </div>
+                <div class="card rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://placehold.co/600x400/0a0a0a/ef4444?text=House+Prices" class="w-full h-56 object-cover">
+                    <div class="p-6"><h3 class="text-2xl font-bold text-white mb-2">House Price Prediction</h3><p class="text-slate-400 mb-4">Trained a Random Forest Regression model to predict housing market prices, achieving 95% accuracy and significant improvements in MAE and MSE.</p></div>
+                </div>
+                <div class="card rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+                    <img src="https://placehold.co/600x400/0a0a0a/ef4444?text=Education+AI" class="w-full h-56 object-cover">
+                    <div class="p-6"><h3 class="text-2xl font-bold text-white mb-2">AI-Automated Education Platform</h3><p class="text-slate-400 mb-4">An ongoing project to create a personalized learning experience using n8n for workflow automation and FastAPI for a robust backend.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chess Achievements Section -->
+        <section id="chess" class="py-28 scroll-mt-20">
+            <h2 class="text-4xl font-bold text-center mb-12 section-title" data-aos="fade-up">Chess Achievements</h2>
+            <div class="max-w-3xl mx-auto card p-8 md:p-12 rounded-2xl" data-aos="fade-up" data-aos-delay="100">
+                <p class="text-xl text-slate-300 leading-relaxed text-center">As a passionate and competitive chess player, I've honed my strategic thinking and problem-solving skills through years of dedication to the game. My journey in chess has been as rewarding as my journey in tech.</p>
+                <ul class="mt-6 text-slate-400 list-disc list-inside space-y-2 text-center text-lg">
+                    <li>State-level tournament winner.</li>
+                    <li>Ranked in the top 5% of national players.</li>
+                    <li>Certified Professional Chess Trainer.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Education & Certifications Section -->
+        <section id="education" class="py-28 scroll-mt-20">
+            <h2 class="text-4xl font-bold text-center mb-12 section-title" data-aos="fade-up">Education & Certifications</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card p-8 rounded-2xl" data-aos="fade-right">
+                    <h3 class="text-2xl font-bold text-white mb-4">Education</h3>
+                    <p class="font-semibold text-lg">Bachelor of Engineering in AI & Data Science</p>
+                    <p class="text-red-400">East Point College of Engineering and Technology, Bengaluru | 2025</p>
+                    <p class="mt-2 text-slate-400">CGPA: 7.5</p>
+                </div>
+                <div class="card p-8 rounded-2xl" data-aos="fade-left">
+                    <h3 class="text-2xl font-bold text-white mb-4">Certifications</h3>
+                    <ul class="list-disc list-inside text-slate-400 space-y-2">
+                        <li>On-Job Training (AI & ML Engineer)</li>
+                        <li>Data Science & Analysis</li>
+                        <li>Python Programming</li>
+                        <li>Machine Learning</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Online Profiles Section -->
+        <section id="profiles" class="py-28 scroll-mt-20">
+            <h2 class="text-4xl font-bold text-center mb-12 section-title" data-aos="fade-up">Find Me Online</h2>
+            <div class="flex justify-center items-center gap-8" data-aos="fade-up" data-aos-delay="100">
+                <a href="https://github.com/xhariix" target="_blank" class="text-slate-400 hover:text-red-500 transition-colors"><i class="fab fa-github fa-3x"></i></a>
+                <a href="https://www.linkedin.com/in/hariharan-murthy" target="_blank" class="text-slate-400 hover:text-red-500 transition-colors"><i class="fab fa-linkedin fa-3x"></i></a>
+                <a href="https://leetcode.com/u/hariharan0602/" target="_blank" class="text-slate-400 hover:text-red-500 transition-colors"><i class="fas fa-code fa-3x"></i></a>
+                <a href="https://www.hackerrank.com/profile/harrish88382" target="_blank" class="text-slate-400 hover:text-red-500 transition-colors"><i class="fab fa-hackerrank fa-3x"></i></a>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-28 scroll-mt-20">
+            <h2 class="text-4xl font-bold text-center mb-12 section-title" data-aos="fade-up">Get In Touch</h2>
+            <div class="max-w-2xl mx-auto card p-8 rounded-2xl" data-aos="fade-up" data-aos-delay="100">
+                <p class="text-center text-lg text-slate-400 mb-8">Have a project in mind or just want to connect? Feel free to send me a message. I'm always open to discussing new ideas and opportunities.</p>
+                <form action="#" method="POST">
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <input type="text" placeholder="Your Name" class="w-full p-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-white" required>
+                        <input type="email" placeholder="Your Email" class="w-full p-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-white" required>
+                    </div>
+                    <div class="mt-6">
+                        <textarea placeholder="Your Message" rows="5" class="w-full p-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-white" required></textarea>
+                    </div>
+                    <div class="text-center mt-6">
+                        <button type="submit" class="bg-red-600 text-white font-bold py-3 px-8 rounded-full hover:bg-red-500 transition-all transform hover:scale-105">Send Message</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black text-slate-400 py-6 mt-20 border-t border-slate-900">
+        <div class="container mx-auto text-center"><p>&copy; 2024 Hariharan M. Designed with passion.</p></div>
+    </footer>
+
+    <!-- AI Chatbot -->
+    <div id="chatbot-container">
+        <div id="chatbot-window">
+            <div class="chat-header">AI Assistant</div>
+            <div class="chat-body"><div class="chat-message bot"><div class="message-bubble">Hey! I am the Assistant here, I can help you explore my boss's work. What would you like to know?</div></div></div>
+            <div class="chat-footer"><input type="text" placeholder="Type your message..." class="chat-input" disabled></div>
+        </div>
+        <button id="chatbot-toggle" aria-label="Toggle Chatbot"><img src="D:\my-portfolio\images\bot-photo.png" class="w-full h-full object-cover"></button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true, offset: 50 });
+        const typingText = document.getElementById('typing-text');
+        const roles = [
+            "Artificial Intelligence & Machine Learning Engineer",
+            "Automation Engineer",
+            "Data Science Engineer",
+            "Professional Chess Trainer"
+        ];
+        let roleIndex = 0, charIndex = 0, isDeleting = false;
+        function type() {
+            const currentRole = roles[roleIndex];
+            let typeSpeed = isDeleting ? 50 : 150;
+            if (isDeleting) { typingText.textContent = currentRole.substring(0, charIndex - 1); charIndex--; } 
+            else { typingText.textContent = currentRole.substring(0, charIndex + 1); charIndex++; }
+            if (!isDeleting && charIndex === currentRole.length) { isDeleting = true; typeSpeed = 2000; } 
+            else if (isDeleting && charIndex === 0) { isDeleting = false; roleIndex = (roleIndex + 1) % roles.length; typeSpeed = 500; }
+            setTimeout(type, typeSpeed);
+        }
+        const chatbotToggle = document.getElementById('chatbot-toggle');
+        const chatbotWindow = document.getElementById('chatbot-window');
+        chatbotToggle.addEventListener('click', () => chatbotWindow.classList.toggle('open'));
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('h1').textContent = 'Hariharan M';
+            document.querySelector('footer p').textContent = '© 2024 Hariharan M. Designed with passion.';
+            setTimeout(type, 500);
+        });
+    </script>
+</body>
+</html>
