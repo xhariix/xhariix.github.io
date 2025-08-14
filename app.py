@@ -6,7 +6,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import requests
 import json
-import os
+import os # <-- IMPORTANT: os library is needed to read environment variables
 from datetime import datetime, timedelta
 import random
 
@@ -100,7 +100,18 @@ def chat():
 
     # If no keyword is found, call the smarter Gemini API
     try:
-        api_key = "" # Make sure your key is pasted here
+        # ======================================================================
+        #  *** THIS IS THE CORRECTED CODE ***
+        #  It now reads the secret key you saved on Render.
+        # ======================================================================
+        api_key = os.environ.get("GEMINI_API_KEY")
+        # ======================================================================
+
+        if not api_key:
+            print("\n\n!!! ERROR: API KEY IS MISSING ON RENDER !!!")
+            print("Please add your API key as an Environment Variable named 'GEMINI_API_KEY' on the Render dashboard.\n\n")
+            return jsonify({'reply': "My AI brain is not connected. The boss needs to add the API key to the backend server."})
+
         api_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key={api_key}"
 
         prompt = f"{portfolio_context}\n\nUser Question: {user_message}\n\nPichuk (AI Assistant):"
@@ -113,9 +124,7 @@ def chat():
         
         result = response.json()
         
-        # *** ROBUST ERROR CHECKING ***
         if 'candidates' not in result or not result['candidates']:
-            # This handles cases where the AI's safety filters block a response
             return jsonify({'reply': "I'm sorry, I can't answer that specific question. Is there something else about my boss's professional work I can help with?"})
 
         ai_response = result['candidates'][0]['content']['parts'][0]['text']
@@ -123,11 +132,9 @@ def chat():
 
     except requests.exceptions.RequestException as e:
         print(f"Error calling Gemini API: {e}")
-        # This handles network errors
-        return jsonify({'reply': "Hmm, my connection to the AI mothership seems to be down. Please try again in a moment."})
+        return jsonify({'reply': "Hmm, my connection to the AI mothership seems to be down. Please check the API key and your internet connection."})
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
-        # This handles any other unexpected errors
         return jsonify({'reply': "Oops! I think I just blew a fuse. My boss will have to fix me. Please try another question."})
 
 
