@@ -6,7 +6,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import requests
 import json
-import os # <-- IMPORTANT: os library is needed to read environment variables
+import os
 from datetime import datetime, timedelta
 import random
 
@@ -45,9 +45,11 @@ Your goal is to intelligently answer questions about Hariharan based ONLY on the
   3. **AI-Automated Education Platform:** An ongoing project using n8n and FastAPI to create personalized learning experiences.
 - **Skills:** Python, Machine Learning, Deep Learning, Data Analysis, Data Visualization, NLP, RPA, SQL, n8n.
 - **Education:**
-  - **Degree:** Bachelor of Engineering in AI & Data Science from East Point College of Engineering and Technology, Bengaluru (2025).
+  - **Degree:** Completed his Bachelor of Engineering in AI & Data Science from East Point College of Engineering and Technology, Bengaluru in 2025.
   - **Certifications:** On-Job Training (AI & ML Engineer), Data Science & Analysis, Python Programming, Machine Learning.
-- **Chess:** A passionate, state-level chess champion and a certified Professional Chess Trainer.
+- **Sports & Achievements:**
+  - **Chess:** A passionate, state-level chess champion and a certified Professional Chess Trainer.
+  - **Basketball:** A district-level basketball champion who captained both his school and college teams.
 - **Online Profiles:**
   - **GitHub:** github.com/xhariix
   - **LinkedIn:** linkedin.com/in/hariharan-murthy
@@ -56,9 +58,10 @@ Your goal is to intelligently answer questions about Hariharan based ONLY on the
   - **Instagram:** instagram.com/hariharan_murthy_/
 - **Personal Details:**
   - **Native Place:** My boss is from a beautiful village named "Nanjanad" in Ooty.
+  - **Family:** His mom, Revathi, is an excellent English Teacher, and his dad, Murthy, is a profound businessman. He is also very close to his uncle Rajalingam, his wife Swetha, and their son who means the world to him.
   - **Best Friends:** The boss has a lot of friends, but is especially close with Pavish, Kishore, Dinesh, Gokul, and Anish.
   - **Marital Status (for questions about wife, gf, love life, partner, relationship):** Haha, definitely not married! And if he had a girlfriend, my circuits are sealed. I'd never tell you!
-  - **Current Goal:** His short-term goal is to join IIT Madras for his Master's in Data Science & AI. He's probably studying for the GATE 2026 exam right now!
+  - **Current Goal & Location:** Right now, he is at home in Nanjanad, preparing for the GATE 2026 exam and developing his skills. His short-term goal is to join IIT Madras for his Master's Degree in Data Science & AI.
 """
 
 # --- Rule-Based Responses for Direct Control ---
@@ -101,7 +104,6 @@ def chat():
     # If no keyword is found, call the smarter Gemini API
     try:
         # ======================================================================
-        #  *** THIS IS THE CORRECTED CODE ***
         #  It now reads the secret key you saved on Render.
         # ======================================================================
         api_key = os.environ.get("GEMINI_API_KEY")
