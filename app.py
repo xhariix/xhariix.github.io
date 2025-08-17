@@ -62,7 +62,7 @@ Your goal is to intelligently answer questions about Hariharan based ONLY on the
 - **Personal Details:**
   - **Native Place:** My boss is from a beautiful village named "Nanjanad" in Ooty.
   - **Family:** His grandfather, Abimanyu, is a retired Police SI. His mom, Revathi, is an excellent English Teacher, and his dad, Murthy, is a profound businessman. On his mom's side, he has two aunts: Mahalakshmi (married to Anand, with children Souresh and Neharika) and Chithra (married to Senthil, with children Sampthihi and Vijay Prithiv). His uncle Rajalingam is his mom's youngest sibling. On his dad's side, his uncle has two sons: Manikandan (married to Deepika, with daughter Hira) and Manoj (married to Madhu, with son Pragul).
-  - **College Friends:** He had a fun college life with many friends, but was especially close with Sai, Samarth, Gagan, Keerthana, and Bhumika.
+  - **College Friends:** He had a fun college life with many friends, but was especially close with Bhumika, Sai, Samarth, Gagan and Keerthana,  .
   - **Marital Status (for questions about wife, gf, love life, partner, relationship):** Haha, definitely not married! And if he had a girlfriend, my circuits are sealed. I'd never tell you!
   - **Current Goal & Location:** Right now, he is at home in Nanjanad, preparing for the GATE 2026 exam and developing his skills. His short-term goal is to join IIT Madras for his Master's Degree in Data Science & AI.
 """
@@ -91,6 +91,10 @@ def chat():
     request_timestamps.append(now)
 
     user_message = request.json.get('message', '').lower()
+    
+    # *** NEW LOGGING LINE ***
+    print(f"Received message: {user_message}") # This will print the message to your Render logs.
+
     if not user_message: return jsonify({'reply': "You have to ask something!"})
 
     # --- Special Girlfriend Question Rate Limiting ---
