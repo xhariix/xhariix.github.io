@@ -104,7 +104,7 @@ def chat():
         gf_question_timestamps.append(now)
         if len(gf_question_timestamps) >= GF_RATE_LIMIT_COUNT:
             gf_question_timestamps = [] # Reset after revealing
-            return jsonify({'reply': "Okay, okay, you're persistent! Fine. Her initials are 'SP'. That's all you're getting out of me!"})
+            return jsonify({'reply': "Okay, okay, you're persistent! Fine. That's all you're getting out of me!"})
 
     # Check for predefined responses first (as a backup)
     for keyword, response in predefined_responses.items():
@@ -145,3 +145,4 @@ def chat():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+
