@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 app = Flask(__name__)
 # Replace with your actual frontend URL if you want to be more secure
-CORS(app) 
+CORS(app, resources={r"/*": {"origins": "*"}}) 
 
 # --- Rate Limiting Setup ---
 request_timestamps = []
@@ -112,3 +112,4 @@ if __name__ == '__main__':
     # host='0.0.0.0' is mandatory for Render
     port = int(os.environ.get("PORT", 10000))
     app.run(host='0.0.0.0', port=port)
+
