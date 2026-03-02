@@ -7,7 +7,27 @@ from datetime import datetime, timedelta
 
 app = Flask(__name__)
 # Replace with your actual frontend URL if you want to be more secure
-CORS(app, resources={r"/*": {"origins": "*"}}) 
+# app.py
+
+# ... other imports ...
+
+app = Flask(__name__)
+
+# This configuration is much stronger for handling Preflight requests
+CORS(app, resources={r"/*": {
+    "origins": "*",
+    "methods": ["GET", "POST", "OPTIONS"],
+    "allow_headers": ["Content-Type", "Authorization"]
+}})
+
+# Ensure your route handles the OPTIONS method explicitly
+@app.route('/chat', methods=['POST', 'OPTIONS'])
+def chat():
+    # Handle the browser's "Preflight" check
+    if request.method == 'OPTIONS':
+        return jsonify({'status': 'ok'}), 200
+
+    # ... the rest of your existing logic ...
 
 # --- Rate Limiting Setup ---
 request_timestamps = []
@@ -112,4 +132,5 @@ if __name__ == '__main__':
     # host='0.0.0.0' is mandatory for Render
     port = int(os.environ.get("PORT", 10000))
     app.run(host='0.0.0.0', port=port)
+
 
