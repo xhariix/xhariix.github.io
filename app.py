@@ -92,7 +92,7 @@ def chat():
             return jsonify({'reply': "My AI brain is disconnected. The boss needs to set the GEMINI_API_KEY on Render."})
 
         # Corrected URL for Gemini 1.5 Flash
-        api_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
+        api_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key={api_key}"
         
         prompt = f"{portfolio_context}\n\nUser Question: {user_message}\n\nPichuk (AI Assistant):"
         
@@ -122,3 +122,4 @@ if __name__ == '__main__':
     # Required for Render to bind correctly
     port = int(os.environ.get("PORT", 10000))
     app.run(host='0.0.0.0', port=port)
+
