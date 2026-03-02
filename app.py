@@ -6,28 +6,14 @@ import os
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
-# Replace with your actual frontend URL if you want to be more secure
-# app.py
 
-# ... other imports ...
-
-app = Flask(__name__)
-
-# This configuration is much stronger for handling Preflight requests
+# --- CORS Configuration ---
+# This handles the "Preflight" handshake from your GitHub Pages frontend
 CORS(app, resources={r"/*": {
     "origins": "*",
     "methods": ["GET", "POST", "OPTIONS"],
     "allow_headers": ["Content-Type", "Authorization"]
 }})
-
-# Ensure your route handles the OPTIONS method explicitly
-@app.route('/chat', methods=['POST', 'OPTIONS'])
-def chat():
-    # Handle the browser's "Preflight" check
-    if request.method == 'OPTIONS':
-        return jsonify({'status': 'ok'}), 200
-
-    # ... the rest of your existing logic ...
 
 # --- Rate Limiting Setup ---
 request_timestamps = []
@@ -68,8 +54,12 @@ Your goal is to intelligently answer questions about Hariharan based ONLY on the
 def home():
     return "Pichuk AI Backend is running!", 200
 
-@app.route('/chat', methods=['POST'])
+@app.route('/chat', methods=['POST', 'OPTIONS'])
 def chat():
+    # Handle the CORS Preflight request from the browser
+    if request.method == 'OPTIONS':
+        return jsonify({'status': 'ok'}), 200
+
     global request_timestamps, gf_question_timestamps
     now = datetime.now()
 
@@ -99,9 +89,9 @@ def chat():
     try:
         api_key = os.environ.get("GEMINI_API_KEY")
         if not api_key:
-            return jsonify({'reply': "My AI brain is disconnected. My boss needs to set the GEMINI_API_KEY on Render."})
+            return jsonify({'reply': "My AI brain is disconnected. The boss needs to set the GEMINI_API_KEY on Render."})
 
-        # Corrected URL (Gemini 1.5 Flash is stable and fast)
+        # Corrected URL for Gemini 1.5 Flash
         api_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
         
         prompt = f"{portfolio_context}\n\nUser Question: {user_message}\n\nPichuk (AI Assistant):"
@@ -129,8 +119,6 @@ def chat():
         return jsonify({'reply': "Oops! I think I just blew a fuse. Try again in a second."})
 
 if __name__ == '__main__':
-    # host='0.0.0.0' is mandatory for Render
+    # Required for Render to bind correctly
     port = int(os.environ.get("PORT", 10000))
     app.run(host='0.0.0.0', port=port)
-
-
