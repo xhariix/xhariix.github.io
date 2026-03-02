@@ -12,9 +12,9 @@
         :root {
             --primary-color: #ef4444;
             --primary-glow: rgba(239, 68, 68, 0.5);
-            --bg-dark: #000000;
+            --bg-dark: #000;
             --bg-card: #0a0a0a;
-            --border-color: #222222;
+            --border-color: #222;
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -28,30 +28,29 @@
         }
         .hero-image {
             mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
             filter: drop-shadow(0 0 15px var(--primary-glow));
         }
         .typing-cursor {
-            display: inline-block;
             width: 3px;
             height: 2.5rem;
             background-color: var(--primary-color);
+            display: inline-block;
             animation: blink 1s infinite;
         }
         @keyframes blink { 50% { opacity: 0; } }
-        .nav-link { position: relative; transition: color 0.3s ease; }
+        .nav-link { position: relative; }
         .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--primary-color);
-            transition: width 0.3s ease;
+            content:'';
+            position:absolute;
+            bottom:-4px;
+            left:50%;
+            width:0;
+            height:2px;
+            background:var(--primary-color);
+            transform:translateX(-50%);
+            transition:0.3s;
         }
-        .nav-link:hover::after { width: 100%; }
+        .nav-link:hover::after { width:100%; }
         .section-title {
             border-bottom: 3px solid var(--primary-color);
             padding-bottom: 8px;
@@ -60,70 +59,20 @@
         .card {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: .3s;
         }
         .card:hover {
             transform: translateY(-10px);
             box-shadow: 0 0 30px var(--primary-glow);
-        }
-        .timeline-item { position: relative; padding-left: 3rem; }
-        .timeline-item:not(:last-child) { padding-bottom: 2rem; }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background-color: var(--border-color);
-        }
-        .timeline-icon {
-            position: absolute;
-            left: -0.7rem;
-            top: 0;
-            width: 1.5rem;
-            height: 1.5rem;
-            background-color: var(--primary-color);
-            border-radius: 50%;
-        }
-        #chatbot-container { position: fixed; bottom: 2rem; right: 2rem; z-index: 100; }
-        #chatbot-toggle {
-            background-color: var(--primary-color);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            overflow: hidden;
-            box-shadow: 0 0 20px var(--primary-glow);
-        }
-        #chatbot-window {
-            position: absolute;
-            bottom: 80px;
-            right: 0;
-            width: 350px;
-            height: 450px;
-            background-color: var(--bg-card);
-            border-radius: 15px;
-            border: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            transform: scale(0.95) translateY(10px);
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s ease;
-        }
-        #chatbot-window.open {
-            transform: scale(1) translateY(0);
-            opacity: 1;
-            pointer-events: auto;
         }
     </style>
 </head>
 
 <body>
 
+<!-- NAV -->
 <nav class="fixed top-4 left-1/2 -translate-x-1/2 z-40 bg-black/50 backdrop-blur-sm p-3 rounded-full border border-gray-800">
-    <div class="flex space-x-4 px-4">
+    <div class="flex gap-4 px-4 text-slate-300">
         <a href="#home" class="nav-link">Home</a>
         <a href="#about" class="nav-link">About</a>
         <a href="#experience" class="nav-link">Experience</a>
@@ -144,9 +93,12 @@
         <div>
             <h2 class="text-2xl text-slate-300">Hello, I'm</h2>
             <h1 class="text-6xl font-extrabold">Hariharan M</h1>
-            <h3 class="text-3xl gradient-text"><span id="typing-text"></span><span class="typing-cursor"></span></h3>
+            <h3 class="text-3xl gradient-text">
+                <span id="typing-text"></span><span class="typing-cursor"></span>
+            </h3>
             <p class="mt-6 text-slate-400 max-w-xl">
-                AI/ML engineer focused on building intelligent, data-driven systems across machine learning, deep learning, analytics, and MLOps, with an emphasis on scalable and deployable solutions.
+                AI/ML engineer focused on building intelligent, data-driven systems across machine learning,
+                deep learning, analytics, and MLOps, with an emphasis on scalable and deployable solutions.
             </p>
         </div>
     </div>
@@ -157,7 +109,9 @@
     <h2 class="text-4xl text-center section-title">About Me</h2>
     <div class="card p-10 mt-10 max-w-3xl mx-auto">
         <p class="text-center text-lg text-slate-300">
-            I am an AI/ML Engineer passionate about building intelligent, scalable, and production-ready systems. My work spans data analysis, machine learning, deep learning, NLP, and MLOps, with hands-on experience in building end-to-end pipelines, deploying models, and automating workflows. Alongside technical expertise, I bring strong leadership experience from academic and sports environments, driving collaboration, ownership, and problem-solving both in code and in teams.
+            AI/ML Engineer with hands-on experience across data analysis, machine learning,
+            deep learning, NLP, and MLOps. Passionate about building end-to-end, production-ready
+            systems with strong foundations in analytics, automation, and deployment.
         </p>
     </div>
 </section>
@@ -165,38 +119,35 @@
 <!-- EXPERIENCE -->
 <section id="experience" class="py-28">
     <h2 class="text-4xl text-center section-title">Experience</h2>
-    <div class="timeline-item max-w-3xl mx-auto mt-12">
-        <div class="timeline-icon"></div>
+    <div class="card p-8 max-w-3xl mx-auto mt-12">
         <h3 class="text-xl font-bold">AI / ML Engineer – On-Job Training (OJT)</h3>
         <p class="text-red-400">Nov 2024 – Jun 2025</p>
-        <ul class="list-disc list-inside mt-4 text-slate-400 space-y-2">
-            <li>Worked on end-to-end data analysis and machine learning workflows using Python, Pandas, NumPy, Scikit-learn, and Power BI.</li>
-            <li>Performed data preparation, feature engineering, and exploratory data analysis.</li>
-            <li>Built and evaluated ML models for classification and regression tasks achieving ~85% performance.</li>
-            <li>Collaborated on model tuning, evaluation, and interpretation.</li>
-            <li>Documented insights through dashboards and technical reports.</li>
+        <ul class="list-disc list-inside text-slate-400 mt-4 space-y-2">
+            <li>End-to-end data analysis and ML workflows using Python, Pandas, NumPy, Scikit-learn, Power BI</li>
+            <li>Feature engineering, EDA, data preparation</li>
+            <li>Built ML models for classification & regression (~85% performance)</li>
+            <li>Model tuning, evaluation, and interpretation</li>
+            <li>Dashboards and technical reporting</li>
         </ul>
     </div>
 </section>
 
-<!-- SKILLS -->
+<!-- SKILLS (FULL) -->
 <section id="skills" class="py-28">
     <h2 class="text-4xl text-center section-title">Technical Skills</h2>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-12">
-        <div class="card p-4 text-center">Python</div>
-        <div class="card p-4 text-center">SQL / MySQL / PostgreSQL</div>
-        <div class="card p-4 text-center">EDA & Feature Engineering</div>
-        <div class="card p-4 text-center">Machine Learning</div>
-        <div class="card p-4 text-center">Deep Learning (CNNs)</div>
-        <div class="card p-4 text-center">NLP & LLMs</div>
-        <div class="card p-4 text-center">ETL Pipelines</div>
-        <div class="card p-4 text-center">Apache Spark (Basics)</div>
-        <div class="card p-4 text-center">Power BI</div>
-        <div class="card p-4 text-center">MLflow</div>
-        <div class="card p-4 text-center">Docker & Kubernetes</div>
-        <div class="card p-4 text-center">FastAPI & CI/CD</div>
-        <div class="card p-4 text-center">n8n Automation</div>
-        <div class="card p-4 text-center">Git & GitHub Actions</div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+
+        <div class="card p-6"><h3 class="font-bold">Programming & Databases</h3><ul class="list-disc list-inside text-slate-400"><li>Python</li><li>SQL</li><li>MySQL</li><li>PostgreSQL</li></ul></div>
+        <div class="card p-6"><h3 class="font-bold">Data Science & Analytics</h3><ul class="list-disc list-inside text-slate-400"><li>EDA</li><li>Feature Engineering</li><li>Statistical Analysis</li><li>Data Cleaning</li></ul></div>
+        <div class="card p-6"><h3 class="font-bold">Machine Learning</h3><ul class="list-disc list-inside text-slate-400"><li>Supervised Learning</li><li>Unsupervised Learning</li><li>Ensemble Models</li><li>Fine-tuning</li><li>Model Evaluation</li></ul></div>
+        <div class="card p-6"><h3 class="font-bold">Deep Learning</h3><ul class="list-disc list-inside text-slate-400"><li>Neural Networks</li><li>CNNs</li><li>Transfer Learning</li></ul></div>
+        <div class="card p-6"><h3 class="font-bold">AI & NLP</h3><ul class="list-disc list-inside text-slate-400"><li>NLP</li><li>LLMs</li><li>Prompt Engineering</li></ul></div>
+        <div class="card p-6"><h3 class="font-bold">Data Engineering</h3><ul class="list-disc list-inside text-slate-400"><li>Data Pipelines</li><li>ETL</li><li>Data Modeling</li></ul></div>
+        <div class="card p-6"><h3 class="font-bold">Big Data</h3><ul class="list-disc list-inside text-slate-400"><li>Big Data Fundamentals</li><li>Apache Spark (Foundational)</li><li>Distributed Processing</li></ul></div>
+        <div class="card p-6"><h3 class="font-bold">Visualization & BI</h3><ul class="list-disc list-inside text-slate-400"><li>Power BI</li><li>DAX</li><li>Power Query</li><li>Matplotlib</li><li>Seaborn</li><li>Plotly</li></ul></div>
+        <div class="card p-6"><h3 class="font-bold">MLOps & Deployment</h3><ul class="list-disc list-inside text-slate-400"><li>ML Pipelines</li><li>MLflow</li><li>Docker</li><li>Kubernetes</li><li>REST APIs</li><li>CI/CD</li></ul></div>
+        <div class="card p-6"><h3 class="font-bold">Automation & Tools</h3><ul class="list-disc list-inside text-slate-400"><li>n8n</li><li>Git</li><li>GitHub Actions</li></ul></div>
+
     </div>
 </section>
 
@@ -204,29 +155,20 @@
 <section id="projects" class="py-28">
     <h2 class="text-4xl text-center section-title">Projects</h2>
     <div class="grid md:grid-cols-3 gap-8 mt-12">
-        <div class="card p-6">
-            <h3 class="text-xl font-bold">Personal Desktop AI Assistant</h3>
-            <p class="text-slate-400 mt-2">Built a Python-based AI assistant using LLM APIs, speech-to-text, text-to-speech, and OS automation achieving ~92% intent accuracy.</p>
-        </div>
-        <div class="card p-6">
-            <h3 class="text-xl font-bold">Customer Churn Prediction System</h3>
-            <p class="text-slate-400 mt-2">Performed EDA and feature engineering; trained ML models achieving ~0.85 F1-score.</p>
-        </div>
-        <div class="card p-6">
-            <h3 class="text-xl font-bold">Production ML Pipeline</h3>
-            <p class="text-slate-400 mt-2">Built end-to-end ML pipelines with MLflow tracking and deployed Dockerized FastAPI services.</p>
-        </div>
+        <div class="card p-6"><h3 class="font-bold">Personal Desktop AI Assistant</h3><p class="text-slate-400 mt-2">LLM-based assistant with STT, TTS, OS automation (~92% intent accuracy).</p></div>
+        <div class="card p-6"><h3 class="font-bold">Customer Churn Prediction</h3><p class="text-slate-400 mt-2">EDA + ML models achieving ~0.85 F1-score.</p></div>
+        <div class="card p-6"><h3 class="font-bold">Production ML Pipeline</h3><p class="text-slate-400 mt-2">MLflow, Docker, FastAPI deployment.</p></div>
     </div>
 </section>
 
 <!-- SPORTS -->
 <section id="sports" class="py-28">
     <h2 class="text-4xl text-center section-title">Sports & Achievements</h2>
-    <div class="card p-10 max-w-3xl mx-auto mt-12">
-        <ul class="list-disc list-inside text-slate-300 space-y-2">
-            <li>Multiple times District Champion in Chess (1567 FIDE rating).</li>
-            <li>District & Zonal level Basketball winner.</li>
-            <li>Captain – School & College teams (Chess, Basketball, Football).</li>
+    <div class="card p-8 max-w-3xl mx-auto mt-12">
+        <ul class="list-disc list-inside text-slate-300">
+            <li>Multiple-time District Champion – Chess</li>
+            <li>Zonal Level Winner – Basketball</li>
+            <li>Captain – Chess, Basketball, Football</li>
         </ul>
     </div>
 </section>
@@ -235,26 +177,25 @@
 <section id="education" class="py-28">
     <h2 class="text-4xl text-center section-title">Education</h2>
     <div class="grid md:grid-cols-2 gap-8 mt-12">
-        <div class="card p-6">
-            <h3 class="font-bold">B.E – AI & Data Science</h3>
-            <p class="text-red-400">East Point College, Bengaluru</p>
-            <p class="text-slate-400">2021 – 2025 | CGPA: 7.5</p>
-        </div>
-        <div class="card p-6">
-            <h3 class="font-bold">Higher Secondary (CBSE)</h3>
-            <p class="text-red-400">Woodside School, Ooty</p>
-            <p class="text-slate-400">2019 | 70%</p>
-        </div>
+        <div class="card p-6"><h3 class="font-bold">B.E – AI & Data Science</h3><p class="text-red-400">East Point College, Bengaluru</p><p>2021 – 2025 | CGPA: 7.5</p></div>
+        <div class="card p-6"><h3 class="font-bold">Higher Secondary (CBSE)</h3><p class="text-red-400">Woodside School, Ooty</p><p>2019 | 70%</p></div>
     </div>
 </section>
 
-<!-- CONTACT -->
+<!-- CONTACT (UNCHANGED) -->
 <section id="contact" class="py-28">
-    <h2 class="text-4xl text-center section-title">Contact</h2>
-    <p class="text-center text-slate-400 mt-6">
-        Email: hariharan060202@gmail.com | Phone: +91 8838248494
-    </p>
+    <h2 class="text-4xl text-center section-title">Get In Touch</h2>
+    <div class="max-w-2xl mx-auto card p-8 mt-10">
+        <form action="https://formspree.io/f/mnnzyvrv" method="POST">
+            <input type="text" name="name" placeholder="Your Name" class="w-full p-3 mb-4 bg-slate-800">
+            <input type="email" name="email" placeholder="Your Email" class="w-full p-3 mb-4 bg-slate-800">
+            <textarea name="message" placeholder="Message" class="w-full p-3 bg-slate-800"></textarea>
+            <button class="mt-4 bg-red-600 px-6 py-2 rounded">Send</button>
+        </form>
+    </div>
 </section>
+
+</main>
 
 <footer class="text-center py-6 text-slate-400 border-t border-slate-800">
     © 2025 Hariharan M. Designed with passion.
@@ -263,14 +204,14 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
 AOS.init();
-const roles = ["AI & ML Engineer","MLOps Engineer","Data Scientist","Automation Engineer"];
+const roles=["AI & ML Engineer","Data Scientist","MLOps Engineer","Automation Engineer"];
 let i=0,j=0,d=false;
 const t=document.getElementById("typing-text");
 (function type(){
 let r=roles[i];
 t.textContent=d?r.slice(0,--j):r.slice(0,++j);
-if(j==r.length)d=true;
-if(j==0){d=false;i=(i+1)%roles.length;}
+if(j===r.length)d=true;
+if(j===0){d=false;i=(i+1)%roles.length;}
 setTimeout(type,d?50:150);
 })();
 </script>
