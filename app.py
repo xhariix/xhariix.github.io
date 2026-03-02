@@ -109,6 +109,6 @@ def chat():
         return jsonify({'reply': "Oops! I think I just blew a fuse. Try again in a second."})
 
 if __name__ == '__main__':
-    # Render requires the app to listen on 0.0.0.0 and the port provided by environment
+    # host='0.0.0.0' is mandatory for Render
     port = int(os.environ.get("PORT", 10000))
     app.run(host='0.0.0.0', port=port)
