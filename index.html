@@ -4,66 +4,168 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hariharan Portfolio</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
         :root {
             --primary-color: #ef4444;
             --primary-glow: rgba(239, 68, 68, 0.5);
-            --bg-dark: #000;
+            --bg-dark: #000000;
             --bg-card: #0a0a0a;
-            --border-color: #222;
+            --border-color: #222222;
         }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-dark);
             color: #e2e8f0;
         }
+
         .gradient-text {
             background: linear-gradient(to right, #f87171, var(--primary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
         .hero-image {
             mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
             filter: drop-shadow(0 0 15px var(--primary-glow));
         }
+
         .typing-cursor {
+            display: inline-block;
             width: 3px;
             height: 2.5rem;
             background-color: var(--primary-color);
-            display: inline-block;
             animation: blink 1s infinite;
         }
+
         @keyframes blink { 50% { opacity: 0; } }
+
         .nav-link { position: relative; }
         .nav-link::after {
-            content:'';
-            position:absolute;
-            bottom:-4px;
-            left:50%;
-            width:0;
-            height:2px;
-            background:var(--primary-color);
-            transform:translateX(-50%);
-            transition:0.3s;
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
         }
-        .nav-link:hover::after { width:100%; }
+        .nav-link:hover::after { width: 100%; }
+
         .section-title {
             border-bottom: 3px solid var(--primary-color);
             padding-bottom: 8px;
             display: inline-block;
         }
+
         .card {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
-            transition: .3s;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
         .card:hover {
             transform: translateY(-10px);
             box-shadow: 0 0 30px var(--primary-glow);
+        }
+
+        /* ===== CHATBOT STYLES (UNCHANGED) ===== */
+        #chatbot-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+        }
+
+        #chatbot-toggle {
+            background-color: var(--primary-color);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 0 20px var(--primary-glow);
+            transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        #chatbot-toggle:hover { transform: scale(1.1); }
+
+        #chatbot-window {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 450px;
+            background-color: var(--bg-card);
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: scale(0.95) translateY(10px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        #chatbot-window.open {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .chat-header {
+            background-color: #333;
+            padding: 1rem;
+            font-weight: bold;
+        }
+
+        .chat-body {
+            flex-grow: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .chat-message { margin-bottom: 1rem; display: flex; }
+        .chat-message.user { justify-content: flex-end; }
+
+        .message-bubble {
+            background-color: #333;
+            border-radius: 15px;
+            padding: 0.75rem;
+            max-width: 80%;
+        }
+
+        .chat-message.user .message-bubble {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 15px 15px 0 15px;
+        }
+
+        .chat-footer {
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .chat-input {
+            width: 100%;
+            background-color: #333;
+            border: 1px solid #444;
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            color: white;
         }
     </style>
 </head>
@@ -109,9 +211,9 @@
     <h2 class="text-4xl text-center section-title">About Me</h2>
     <div class="card p-10 mt-10 max-w-3xl mx-auto">
         <p class="text-center text-lg text-slate-300">
-            AI/ML Engineer with hands-on experience across data analysis, machine learning,
-            deep learning, NLP, and MLOps. Passionate about building end-to-end, production-ready
-            systems with strong foundations in analytics, automation, and deployment.
+            AI/ML Engineer with hands-on experience in data analysis, machine learning, deep learning,
+            NLP, and MLOps. Experienced in building end-to-end pipelines, deploying models, and
+            automating workflows with a strong foundation in analytics and system design.
         </p>
     </div>
 </section>
@@ -124,15 +226,15 @@
         <p class="text-red-400">Nov 2024 – Jun 2025</p>
         <ul class="list-disc list-inside text-slate-400 mt-4 space-y-2">
             <li>End-to-end data analysis and ML workflows using Python, Pandas, NumPy, Scikit-learn, Power BI</li>
-            <li>Feature engineering, EDA, data preparation</li>
-            <li>Built ML models for classification & regression (~85% performance)</li>
+            <li>EDA, feature engineering, and data preparation</li>
+            <li>Built and evaluated ML models for classification and regression (~85% performance)</li>
             <li>Model tuning, evaluation, and interpretation</li>
-            <li>Dashboards and technical reporting</li>
+            <li>Dashboard creation and technical reporting</li>
         </ul>
     </div>
 </section>
 
-<!-- SKILLS (FULL) -->
+<!-- SKILLS (FULL RESUME) -->
 <section id="skills" class="py-28">
     <h2 class="text-4xl text-center section-title">Technical Skills</h2>
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
@@ -142,10 +244,10 @@
         <div class="card p-6"><h3 class="font-bold">Machine Learning</h3><ul class="list-disc list-inside text-slate-400"><li>Supervised Learning</li><li>Unsupervised Learning</li><li>Ensemble Models</li><li>Fine-tuning</li><li>Model Evaluation</li></ul></div>
         <div class="card p-6"><h3 class="font-bold">Deep Learning</h3><ul class="list-disc list-inside text-slate-400"><li>Neural Networks</li><li>CNNs</li><li>Transfer Learning</li></ul></div>
         <div class="card p-6"><h3 class="font-bold">AI & NLP</h3><ul class="list-disc list-inside text-slate-400"><li>NLP</li><li>LLMs</li><li>Prompt Engineering</li></ul></div>
-        <div class="card p-6"><h3 class="font-bold">Data Engineering</h3><ul class="list-disc list-inside text-slate-400"><li>Data Pipelines</li><li>ETL</li><li>Data Modeling</li></ul></div>
-        <div class="card p-6"><h3 class="font-bold">Big Data</h3><ul class="list-disc list-inside text-slate-400"><li>Big Data Fundamentals</li><li>Apache Spark (Foundational)</li><li>Distributed Processing</li></ul></div>
+        <div class="card p-6"><h3 class="font-bold">Data Engineering</h3><ul class="list-disc list-inside text-slate-400"><li>Data Pipelines</li><li>ETL Processes</li><li>Data Modeling</li></ul></div>
+        <div class="card p-6"><h3 class="font-bold">Big Data</h3><ul class="list-disc list-inside text-slate-400"><li>Big Data Fundamentals</li><li>Apache Spark (Foundational)</li><li>Distributed Data Processing</li></ul></div>
         <div class="card p-6"><h3 class="font-bold">Visualization & BI</h3><ul class="list-disc list-inside text-slate-400"><li>Power BI</li><li>DAX</li><li>Power Query</li><li>Matplotlib</li><li>Seaborn</li><li>Plotly</li></ul></div>
-        <div class="card p-6"><h3 class="font-bold">MLOps & Deployment</h3><ul class="list-disc list-inside text-slate-400"><li>ML Pipelines</li><li>MLflow</li><li>Docker</li><li>Kubernetes</li><li>REST APIs</li><li>CI/CD</li></ul></div>
+        <div class="card p-6"><h3 class="font-bold">MLOps & Deployment</h3><ul class="list-disc list-inside text-slate-400"><li>ML Pipelines</li><li>Model Versioning & Monitoring</li><li>Experiment Tracking (MLflow)</li><li>Docker</li><li>Kubernetes</li><li>REST APIs</li><li>CI/CD</li></ul></div>
         <div class="card p-6"><h3 class="font-bold">Automation & Tools</h3><ul class="list-disc list-inside text-slate-400"><li>n8n</li><li>Git</li><li>GitHub Actions</li></ul></div>
 
     </div>
@@ -156,8 +258,8 @@
     <h2 class="text-4xl text-center section-title">Projects</h2>
     <div class="grid md:grid-cols-3 gap-8 mt-12">
         <div class="card p-6"><h3 class="font-bold">Personal Desktop AI Assistant</h3><p class="text-slate-400 mt-2">LLM-based assistant with STT, TTS, OS automation (~92% intent accuracy).</p></div>
-        <div class="card p-6"><h3 class="font-bold">Customer Churn Prediction</h3><p class="text-slate-400 mt-2">EDA + ML models achieving ~0.85 F1-score.</p></div>
-        <div class="card p-6"><h3 class="font-bold">Production ML Pipeline</h3><p class="text-slate-400 mt-2">MLflow, Docker, FastAPI deployment.</p></div>
+        <div class="card p-6"><h3 class="font-bold">Advanced Customer Churn Prediction</h3><p class="text-slate-400 mt-2">EDA + ML models achieving ~0.85 F1-score.</p></div>
+        <div class="card p-6"><h3 class="font-bold">Production ML Pipeline</h3><p class="text-slate-400 mt-2">End-to-end pipeline with MLflow, Docker, FastAPI deployment.</p></div>
     </div>
 </section>
 
@@ -166,7 +268,7 @@
     <h2 class="text-4xl text-center section-title">Sports & Achievements</h2>
     <div class="card p-8 max-w-3xl mx-auto mt-12">
         <ul class="list-disc list-inside text-slate-300">
-            <li>Multiple-time District Champion – Chess</li>
+            <li>Multiple times District Champion – Chess</li>
             <li>Zonal Level Winner – Basketball</li>
             <li>Captain – Chess, Basketball, Football</li>
         </ul>
@@ -186,11 +288,11 @@
 <section id="contact" class="py-28">
     <h2 class="text-4xl text-center section-title">Get In Touch</h2>
     <div class="max-w-2xl mx-auto card p-8 mt-10">
-        <form action="https://formspree.io/f/mnnzyvrv" method="POST">
-            <input type="text" name="name" placeholder="Your Name" class="w-full p-3 mb-4 bg-slate-800">
-            <input type="email" name="email" placeholder="Your Email" class="w-full p-3 mb-4 bg-slate-800">
-            <textarea name="message" placeholder="Message" class="w-full p-3 bg-slate-800"></textarea>
-            <button class="mt-4 bg-red-600 px-6 py-2 rounded">Send</button>
+        <form id="contact-form" action="https://formspree.io/f/mnnzyvrv" method="POST">
+            <input type="text" name="name" placeholder="Your Name" class="w-full p-3 mb-4 bg-slate-800" required>
+            <input type="email" name="email" placeholder="Your Email" class="w-full p-3 mb-4 bg-slate-800" required>
+            <textarea name="message" rows="5" placeholder="Your Message" class="w-full p-3 bg-slate-800" required></textarea>
+            <button type="submit" class="mt-4 bg-red-600 px-6 py-2 rounded">Send</button>
         </form>
     </div>
 </section>
@@ -201,19 +303,88 @@
     © 2025 Hariharan M. Designed with passion.
 </footer>
 
+<!-- ===== CHATBOT HTML (UNCHANGED) ===== -->
+<div id="chatbot-container">
+    <div id="chatbot-window">
+        <div class="chat-header">AI Assistant</div>
+        <div id="chat-body" class="chat-body">
+            <div class="chat-message bot">
+                <div class="message-bubble">
+                    Hey! I am the Assistant here, I can help you explore my boss's work. What would you like to know?
+                </div>
+            </div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="chat-input" placeholder="Ask me anything..." class="chat-input">
+        </div>
+    </div>
+    <button id="chatbot-toggle">
+        <img src="images/bot-photo.png" class="w-full h-full object-cover">
+    </button>
+</div>
+
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
 AOS.init();
-const roles=["AI & ML Engineer","Data Scientist","MLOps Engineer","Automation Engineer"];
-let i=0,j=0,d=false;
-const t=document.getElementById("typing-text");
-(function type(){
-let r=roles[i];
-t.textContent=d?r.slice(0,--j):r.slice(0,++j);
-if(j===r.length)d=true;
-if(j===0){d=false;i=(i+1)%roles.length;}
-setTimeout(type,d?50:150);
-})();
+
+const roles = ["AI & ML Engineer","Data Scientist","MLOps Engineer","Automation Engineer"];
+let roleIndex=0,charIndex=0,isDeleting=false;
+const typingText=document.getElementById("typing-text");
+
+function type(){
+    const current=roles[roleIndex];
+    typingText.textContent=isDeleting
+        ? current.substring(0,--charIndex)
+        : current.substring(0,++charIndex);
+
+    if(!isDeleting && charIndex===current.length){ isDeleting=true; setTimeout(type,1500); return; }
+    if(isDeleting && charIndex===0){ isDeleting=false; roleIndex=(roleIndex+1)%roles.length; }
+
+    setTimeout(type,isDeleting?50:120);
+}
+type();
+
+/* CHATBOT JS (UNCHANGED, USES YOUR app.py BACKEND) */
+const chatbotToggle=document.getElementById('chatbot-toggle');
+const chatbotWindow=document.getElementById('chatbot-window');
+const chatBody=document.getElementById('chat-body');
+const chatInput=document.getElementById('chat-input');
+
+chatbotToggle.addEventListener('click',()=>chatbotWindow.classList.toggle('open'));
+
+chatInput.addEventListener('keypress',async e=>{
+    if(e.key==='Enter' && chatInput.value.trim()){
+        const msg=chatInput.value;
+        chatInput.value='';
+        append(msg,'user');
+        append('Typing...','bot');
+
+        try{
+            const res=await fetch('https://hariharan-chatbot.onrender.com/chat',{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({message:msg})
+            });
+            chatBody.lastChild.remove();
+            const data=await res.json();
+            append(data.reply,'bot');
+        }catch{
+            chatBody.lastChild.remove();
+            append('Connection error. Try again later.','bot');
+        }
+    }
+});
+
+function append(text,who){
+    const div=document.createElement('div');
+    div.className=`chat-message ${who}`;
+    const b=document.createElement('div');
+    b.className='message-bubble';
+    b.textContent=text;
+    div.appendChild(b);
+    chatBody.appendChild(div);
+    chatBody.scrollTop=chatBody.scrollHeight;
+}
 </script>
 
 </body>
