@@ -118,7 +118,7 @@ def chat():
             print("\n\n!!! ERROR: API KEY IS MISSING ON RENDER !!!")
             return jsonify({'reply': "My AI brain is not connected. The boss needs to add the API key to the backend server."})
 
-        api_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
+        api_url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={api_key}"
         prompt = f"{portfolio_context}\n\nUser Question: {user_message}\n\nPichuk (AI Assistant):"
         
         payload = {"contents": [{"parts": [{"text": prompt}]}]}
@@ -145,6 +145,7 @@ def chat():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+
 
 
 
