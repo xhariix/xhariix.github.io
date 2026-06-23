@@ -179,10 +179,117 @@
             padding: 0.5rem 1rem;
             color: white;
         }
+
+        /* ===== VISUAL ENHANCEMENTS ===== */
+
+        /* Scroll progress bar */
+        #scroll-progress {
+            position: fixed;
+            top: 0; left: 0;
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(to right, #ef4444, #f97316, #ef4444);
+            z-index: 9999;
+            transition: width 0.08s linear;
+            box-shadow: 0 0 8px rgba(239,68,68,0.8);
+        }
+
+        /* Particle canvas background */
+        #particles-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            opacity: 0.35;
+        }
+
+        /* Floating hero image */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-18px); }
+        }
+        .hero-image { animation: float 5s ease-in-out infinite; }
+
+        /* Card shimmer border on hover */
+        .card {
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(239,68,68,0.6) 60deg, transparent 120deg);
+            opacity: 0;
+            transition: opacity 0.4s;
+            z-index: 0;
+            animation: spin 3s linear infinite;
+        }
+        .card:hover::before { opacity: 1; }
+        .card > * { position: relative; z-index: 1; }
+
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* Glow pulse on section titles */
+        .section-title {
+            animation: title-pulse 3s ease-in-out infinite;
+        }
+        @keyframes title-pulse {
+            0%, 100% { text-shadow: 0 0 10px rgba(239,68,68,0.2); }
+            50% { text-shadow: 0 0 25px rgba(239,68,68,0.6); }
+        }
+
+        /* Mouse spotlight */
+        #spotlight {
+            position: fixed;
+            pointer-events: none;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(239,68,68,0.06) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            transition: transform 0.05s;
+        }
+
+        /* Badge hover glow */
+        .badge {
+            transition: all 0.2s;
+        }
+        .badge:hover {
+            background: rgba(239,68,68,0.35);
+            box-shadow: 0 0 8px rgba(239,68,68,0.5);
+        }
+
+        /* Hero gradient text shimmer */
+        .gradient-text {
+            background: linear-gradient(90deg, #f87171, #ef4444, #fb923c, #ef4444, #f87171);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s linear infinite;
+        }
+        @keyframes shimmer { to { background-position: 200% center; } }
+
+        /* Smooth nav glow on scroll */
+        nav { transition: background 0.3s, box-shadow 0.3s; }
+        nav.scrolled { box-shadow: 0 0 20px rgba(239,68,68,0.15); }
+
+        /* Section fade-up already via AOS — add extra glow to headings */
+        h1, h2 { letter-spacing: -0.5px; }
+
+        /* Contact form inputs */
+        input, textarea { border-radius: 8px; border: 1px solid #333; color: white; outline: none; transition: border-color 0.3s, box-shadow 0.3s; }
+        input:focus, textarea:focus { border-color: var(--primary-color); box-shadow: 0 0 12px rgba(239,68,68,0.3); }
     </style>
 </head>
 
 <body>
+
+<div id="scroll-progress"></div>
+<canvas id="particles-canvas"></canvas>
+<div id="spotlight"></div>
 
 <!-- NAV -->
 <nav class="fixed top-4 left-1/2 -translate-x-1/2 z-40 bg-black/50 backdrop-blur-sm p-3 rounded-full border border-gray-800">
@@ -525,6 +632,98 @@ function append(text,who){
     chatBody.appendChild(div);
     chatBody.scrollTop=chatBody.scrollHeight;
 }
+
+/* ===== SCROLL PROGRESS BAR ===== */
+const scrollBar = document.getElementById('scroll-progress');
+window.addEventListener('scroll', () => {
+    const total = document.body.scrollHeight - window.innerHeight;
+    scrollBar.style.width = (window.scrollY / total * 100) + '%';
+    document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+/* ===== MOUSE SPOTLIGHT ===== */
+const spotlight = document.getElementById('spotlight');
+document.addEventListener('mousemove', e => {
+    spotlight.style.left = e.clientX + 'px';
+    spotlight.style.top = e.clientY + 'px';
+});
+
+/* ===== PARTICLE NETWORK CANVAS ===== */
+(function(){
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
+    const COUNT = 80, MAX_DIST = 140;
+
+    function resize(){ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function Particle(){
+        this.x = Math.random() * W;
+        this.y = Math.random() * H;
+        this.vx = (Math.random() - 0.5) * 0.6;
+        this.vy = (Math.random() - 0.5) * 0.6;
+        this.r = Math.random() * 2 + 1;
+    }
+    Particle.prototype.update = function(){
+        this.x += this.vx; this.y += this.vy;
+        if(this.x < 0 || this.x > W) this.vx *= -1;
+        if(this.y < 0 || this.y > H) this.vy *= -1;
+    };
+
+    for(let i=0;i<COUNT;i++) particles.push(new Particle());
+
+    function draw(){
+        ctx.clearRect(0, 0, W, H);
+        particles.forEach(p => {
+            p.update();
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+            ctx.fillStyle = 'rgba(239,68,68,0.7)';
+            ctx.fill();
+        });
+        for(let i=0;i<COUNT;i++){
+            for(let j=i+1;j<COUNT;j++){
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                if(dist < MAX_DIST){
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.strokeStyle = `rgba(239,68,68,${0.5*(1-dist/MAX_DIST)})`;
+                    ctx.lineWidth = 0.6;
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(draw);
+    }
+    draw();
+})();
+
+/* ===== CARD TILT EFFECT ===== */
+document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width/2;
+        const y = e.clientY - rect.top - rect.height/2;
+        card.style.transform = `perspective(600px) rotateY(${x/25}deg) rotateX(${-y/25}deg) translateY(-8px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+    });
+});
+
+/* ===== AOS DATA ATTRS (auto-add if missing) ===== */
+document.querySelectorAll('section').forEach((s,i)=>{
+    if(!s.hasAttribute('data-aos')){
+        s.setAttribute('data-aos','fade-up');
+        s.setAttribute('data-aos-delay', i*60);
+    }
+});
+AOS.refresh();
 </script>
 
 </body>
