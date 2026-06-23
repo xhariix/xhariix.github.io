@@ -698,14 +698,6 @@ document.querySelectorAll('.card').forEach(card => {
     });
 });
 
-/* ===== AOS DATA ATTRS (auto-add if missing) ===== */
-document.querySelectorAll('section').forEach((s,i)=>{
-    if(!s.hasAttribute('data-aos')){
-        s.setAttribute('data-aos','fade-up');
-        s.setAttribute('data-aos-delay', i*60);
-    }
-});
-AOS.refresh();
 </script>
 
 </body>
