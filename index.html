@@ -194,14 +194,30 @@
             box-shadow: 0 0 8px rgba(239,68,68,0.8);
         }
 
-        /* Particle canvas background */
+        /* Particle canvas — behind everything */
         #particles-canvas {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: -1;
-            opacity: 0.35;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.3;
         }
+
+        /* Spotlight — behind content */
+        #spotlight {
+            position: fixed;
+            pointer-events: none;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(239,68,68,0.07) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+        }
+
+        /* Main content above canvas/spotlight */
+        nav, main, footer, #chatbot-container { position: relative; z-index: 2; }
 
         /* Floating hero image */
         @keyframes float {
@@ -210,26 +226,10 @@
         }
         .hero-image { animation: float 5s ease-in-out infinite; }
 
-        /* Card shimmer border on hover */
-        .card {
-            position: relative;
-            overflow: hidden;
+        /* Card glow on hover — simple box-shadow only, no pseudo-element covering content */
+        .card:hover {
+            box-shadow: 0 0 0 1px rgba(239,68,68,0.5), 0 0 30px rgba(239,68,68,0.2);
         }
-        .card::before {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            border-radius: inherit;
-            background: conic-gradient(from 0deg, transparent 0deg, rgba(239,68,68,0.6) 60deg, transparent 120deg);
-            opacity: 0;
-            transition: opacity 0.4s;
-            z-index: 0;
-            animation: spin 3s linear infinite;
-        }
-        .card:hover::before { opacity: 1; }
-        .card > * { position: relative; z-index: 1; }
-
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         /* Glow pulse on section titles */
         .section-title {
@@ -240,23 +240,8 @@
             50% { text-shadow: 0 0 25px rgba(239,68,68,0.6); }
         }
 
-        /* Mouse spotlight */
-        #spotlight {
-            position: fixed;
-            pointer-events: none;
-            width: 500px;
-            height: 500px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(239,68,68,0.06) 0%, transparent 70%);
-            transform: translate(-50%, -50%);
-            z-index: 0;
-            transition: transform 0.05s;
-        }
-
         /* Badge hover glow */
-        .badge {
-            transition: all 0.2s;
-        }
+        .badge { transition: all 0.2s; }
         .badge:hover {
             background: rgba(239,68,68,0.35);
             box-shadow: 0 0 8px rgba(239,68,68,0.5);
@@ -272,12 +257,9 @@
         }
         @keyframes shimmer { to { background-position: 200% center; } }
 
-        /* Smooth nav glow on scroll */
-        nav { transition: background 0.3s, box-shadow 0.3s; }
-        nav.scrolled { box-shadow: 0 0 20px rgba(239,68,68,0.15); }
-
-        /* Section fade-up already via AOS — add extra glow to headings */
-        h1, h2 { letter-spacing: -0.5px; }
+        /* Nav glow on scroll */
+        nav { transition: box-shadow 0.3s; }
+        nav.scrolled { box-shadow: 0 0 20px rgba(239,68,68,0.2); }
 
         /* Contact form inputs */
         input, textarea { border-radius: 8px; border: 1px solid #333; color: white; outline: none; transition: border-color 0.3s, box-shadow 0.3s; }
